@@ -116,13 +116,13 @@ resource "aws_vpc" "Main" {
 
     description = "Security group for public subnet"
 
-    name = "radaur-pub-sg"
+    name = var.pub_sg_name
 
     vpc_id = aws_vpc.Main.id
 
     tags = {
 
-        Name = "radaur-pub-sg"
+        Name = var.pub_sg_name
 
     }
 
@@ -144,7 +144,7 @@ resource "aws_vpc" "Main" {
     from_port = 0
     to_port = 0
     protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.pub_sg_e_cidr]
 
     }
 }
@@ -153,13 +153,13 @@ resource "aws_security_group" "priv_sg" {
 
     description = "Security group for private subnets"
 
-    name = "sg_for_priv_subnets"
+    name = var.sg_pv_name
 
     vpc_id = aws_vpc.Main.id
 
     tags = {
 
-        Name = "radaur-priv-sg"
+        Name = var.sg_pv_Name
 
     }
 
@@ -172,7 +172,7 @@ resource "aws_security_group" "priv_sg" {
     from_port = 0
     to_port = 0
     protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.priv_sg_e_cidr]
     }
 }
 
@@ -182,13 +182,13 @@ resource "aws_security_group" "bastion_sg" {
 
     description = "Security group for private subnets"
 
-    name = "radaur-bastion-sg"
+    name = var.bastion_sg_name
 
     vpc_id = aws_vpc.Main.id
 
     tags = {
 
-        Name = "radaur-bastion-sg"
+        Name = var.bastion_sg_Name
 
     }
 

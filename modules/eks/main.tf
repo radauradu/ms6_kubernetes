@@ -2,7 +2,7 @@ data "terraform_remote_state" "network" {
     backend = "s3"
     config = {
         bucket = "rr-s3-bucket-ms6-tfstate"
-        key = "modules/network/terraform.tfstate"
+        key = "live/dev/network/terraform.tfstate"
         region = "eu-central-1"
     }
 }
@@ -21,11 +21,12 @@ data "terraform_remote_state" "iam" {
 
 
 resource "aws_eks_cluster" "student-rr-ms6" {
-  name     = "student-rr_eks_ms6"
+  name     = var.cluster_name
   role_arn = data.terraform_remote_state.iam.outputs.iam_arn
 
   vpc_config {
-    subnet_ids = [data.terraform_remote_state.network.outputs.subnets_public, data.terraform_remote_state.network.outputs.subnets_private] 
+    subnet_ids = data.terraform_remote_state.network.outputs.subnets_priv
+    #[data.terraform_remote_state.network.outputs.subnets_public, data.terraform_remote_state.network.outputs.subnets_private] 
     
     #[aws_subnet.example1.id, aws_subnet.example2.id]
   }
@@ -41,7 +42,7 @@ resource "aws_eks_cluster" "student-rr-ms6" {
 
 resource "aws_eks_node_group" "student-rr_eks_ng" {
   cluster_name    = aws_eks_cluster.student-rr-ms6.name
-  node_group_name = "rr-ng-ms6"
+  node_group_name = var.ng_name
   node_role_arn   = data.terraform_remote_state.iam.outputs.node_arn
   subnet_ids      = data.terraform_remote_state.network.outputs.subnets_priv
  

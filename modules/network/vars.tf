@@ -59,4 +59,31 @@ variable "main_vpc_cidr" {
  variable "cidr_blocks_sg" {
   default = ["194.117.242.0/26", "195.93.136.0/26"]
  }
+
+ variable "pub_sg_name"{
+  default = "radaur-pub-sg"
+ }
+
+ variable "pub_sg_e_cidr"{
+   default = "0.0.0.0/0"
+ }
  
+ variable "sg_pv_name"{
+  default = "sg_for_priv_subnets"
+ }
+
+ variable "sg_pv_Name"{
+  default = "radaur-priv-sg"
+ }
+
+ variable "priv_sg_e_cidr"{
+   default = "0.0.0.0/0"
+ }
+
+ variable "bastion_sg_name"{
+  default = "radaur-bastion-sg"
+ }
+
+ variable "bastion_sg_Name"{
+  default = "radaur-bastion-sg"
+ }
