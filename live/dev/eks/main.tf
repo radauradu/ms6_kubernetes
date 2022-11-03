@@ -1,5 +1,5 @@
 module "eks"{
-    source = "/Users/radu.radau/Desktop/Milestone 6 K8s/modules/eks"
+    source = "../../../modules/eks"
 }
 terraform {
   backend "s3" {
