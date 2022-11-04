@@ -32,3 +32,5 @@ node("linux"){
                  docker.image('hashicorp/terraform').inside('--entrypoint ""') {
     }
 }
+}
+    }
