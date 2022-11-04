@@ -38,8 +38,13 @@ node("linux"){
                             cd '''+item+'''
                             echo "Current directory: $(pwd)"
                             terraform init
-                            terraform plan -out=plan
-                            echo plan '''
+                            terraform plan -out=plan'''
+                            env.PLAN = input message: 'Do you want to implement plan?', parameters: [choice(name: 'PLAN', choices: ['YES', 'NO'], description: 'Implement plan')]
+                             if (env.PLAN == 'YES') {
+                                 sh '''
+                                 cd '''+item+'''
+                                 terraform apply plan
+                                 '''
 
                         }
                     }
