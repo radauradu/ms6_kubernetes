@@ -39,7 +39,7 @@ node("linux"){
                             echo "Current directory: $(pwd)"
                             terraform init
                             terraform plan -out=plan
-                            echo plan
+                            echo plan '''
 
                         }
                     }
