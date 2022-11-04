@@ -46,6 +46,20 @@ node("linux"){
                                  terraform apply plan
                                  '''
 
+                    if(params.ACTION == 'Destroy') {
+                        for(String item : env_list) {
+                            sh '''
+                            cd '''+item+'''
+                            echo "Current directory: $(pwd)"
+                            terraform init
+                            terraform plan -destroy -out=plan'''
+                            env.PLAN = input message: 'Do you want to destroy everything?', parameters: [choice(name: 'PLAN', choices: ['YES', 'NO'], description: 'Get rid of everything')]
+                             if (env.PLAN == 'YES') {
+                                 sh '''
+                                 cd '''+item+'''
+                                 terraform apply plan
+                                 '''             
+
                         }
                     }
     }
