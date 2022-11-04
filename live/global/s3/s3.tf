@@ -32,4 +32,6 @@ resource "aws_dynamodb_table" "t_l" {
     }
 }
 
-
+provider "aws" {
+    region = "eu-central-1"
+}
