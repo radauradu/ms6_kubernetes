@@ -31,6 +31,18 @@ node("linux"){
            withCredentials([string(credentialsId: 'rr_access_key', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'rr_secret_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {               
              docker.image('hashicorp/terraform').withRun('-e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY"') { c ->
                  docker.image('hashicorp/terraform').inside('--entrypoint ""') {
+
+                    if(params.ACTION == 'Apply') {
+                        for(String item : env_list) {
+                            sh '''
+                            cd '''+item+'''
+                            echo "Current directory: $(pwd)"
+                            terraform init
+                            terraform plan -out=plan
+                            echo plan
+
+                        }
+                    }
     }
 }
 }
