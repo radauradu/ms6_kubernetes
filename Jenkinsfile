@@ -26,8 +26,9 @@ def env_list = ["live/global/iam", "live/dev/network", "live/dev/eks"]
 node("linux"){
     stage("apply/destroy"){
         checkout scm
-         withCredentials([string(credentialsId: params.AWS_ACCESS_KEY, variable: 'AWS_ACCESS_KEY_ID'), 
-                          string(credentialsId: params.AWS_SECRET_KEY, variable: 'AWS_SECRET_ACCESS_KEY')]) {
+         /*withCredentials([string(credentialsId: params.AWS_ACCESS_KEY, variable: 'AWS_ACCESS_KEY_ID'), 
+                          string(credentialsId: params.AWS_SECRET_KEY, variable: 'AWS_SECRET_ACCESS_KEY')]) { */
+           withCredentials([string(credentialsId: 'rr_access_key', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'rr_secret_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {               
              docker.image('hashicorp/terraform').withRun('-e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY"') { c ->
                  docker.image('hashicorp/terraform').inside('--entrypoint ""') {
     }
