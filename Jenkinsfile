@@ -45,6 +45,9 @@ node("linux"){
                                  cd '''+item+'''
                                  terraform apply plan
                                  '''
+                                 }
+                        }
+                    }
 
                     if(params.ACTION == 'Destroy') {
                         for(String item : env_list) {
@@ -68,6 +71,4 @@ node("linux"){
 }
 }
 }
-           }
-    }
-}
+           
