@@ -22,6 +22,7 @@ properties([
 ])
 
 def env_list = ["live/global/iam", "live/dev/network", "live/dev/eks"]
+def env_list2 = ["live/dev/eks", "live/dev/network"]
 
 node("linux"){
     stage("apply/destroy"){
@@ -50,7 +51,7 @@ node("linux"){
                     }
 
                     if(params.ACTION == 'Destroy') {
-                        for(String item : env_list) {
+                        for(String item : env_list2) {
                             sh '''
                             cd '''+item+'''
                             echo "Current directory: $(pwd)"
